@@ -46,10 +46,12 @@ async function GetAllAccountNames() {
     data = await GetAccountsSegment(key);
     key = data.rows.pop().owner;
     data.rows.map(async function(v) {
-      let formatted = {
-        "name": v.owner,
-      };
-      accounts.push(formatted);
+      if ( v.owner.length === 12 ) {
+        let formatted = {
+          "name": v.owner,
+        };
+        accounts.push(formatted);
+      }
     });
   }
 
