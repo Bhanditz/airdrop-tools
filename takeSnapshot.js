@@ -10,7 +10,8 @@ process.on('unhandledRejection', error => {
 });
 
 // if you are running an airgrab, specify your contract
-airgrab = 'poormantoken'; //set to false if no airgrab
+// airgrab = 'poormantoken'; //set to false if no airgrab
+airgrab = false;
 
 config = {
   chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906', // 32 byte (64 char) hex string
