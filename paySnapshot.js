@@ -10,13 +10,13 @@ process.on('unhandledRejection', error => {
 
 
 airdropConfig = {
-  contract: 'poormantoken',
+  contract: 'fromaccount1',
   privKey: 'TOKEN CONTRACT PRIVATE KEY',
-  symbol: 'POOR',
+  symbol: 'EOS',
   precision: 4,
-  minimum: '1.0000 POOR', //minimum award
+  minimum: '1.0000 EOS', //minimum award
   threshold: 1, //minimum awarded to anyone below this threshold
-  memo: 'Thanks for being POOR with us!',
+  memo: '你的广告软文!',
 }
 
 eosConfig = {
@@ -37,8 +37,10 @@ async function Payment(tr,name,quantity) {
   //Calculate the actual payment amount based on the provided CSV
   let actual = `${Number(quantity).toFixed(airdropConfig.precision).toString()} ${airdropConfig.symbol}`;
   //Determine if we award the minimum
-  let payment = Number(quantity) < airdropConfig.threshold ? airdropConfig.minimum : actual;
-  return tr.issue(
+  //let payment = Number(quantity) < airdropConfig.threshold ? airdropConfig.minimum : actual;
+  let payment = '0.0001 EOS';
+  return tr.transfer(
+    airdropConfig.contract, //from
     name.toString().trim(), //the person receiving the airdrop
     payment,                //the payment quantity
     airdropConfig.memo,     //the airdrop memo
@@ -48,7 +50,7 @@ async function Payment(tr,name,quantity) {
 
 async function IssuePayment(names) {
   //we create a transaction with multiple issue actions
-  return eosClient.transaction(airdropConfig.contract,tr => {
+  return eosClient.transaction('eosio.token',tr => {
     for(let i = 0; i < names.length; i++) {
       if(names[i][0] !== "") {
         Payment(tr,names[i][0],names[i][1]);
