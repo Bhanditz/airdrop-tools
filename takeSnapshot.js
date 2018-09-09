@@ -72,6 +72,9 @@ async function CreateRow(row) {
   if(details) {
     try {
       let eos = Number(details.core_liquid_balance ? details.core_liquid_balance.split(' ')[0] : 0);
+      if ( eos <= 0 ) {
+        return;
+      }
       let net = Number(details.self_delegated_bandwidth ? details.self_delegated_bandwidth.net_weight.split(' ')[0] : 0);
       let cpu = Number(details.self_delegated_bandwidth ? details.self_delegated_bandwidth.cpu_weight.split(' ')[0] : 0);
       let proxyVotes = 0;
